@@ -1,0 +1,11 @@
+# Prompt 1: Infrastructure Layer Extraction (Database)
+Extract the database connection and query logic from legacy_enrollment_processor.py into a new file called infrastructure/db_manager.py. It should contain a DatabaseManager class that handles the connection lifecycle, table initialization, fetching current credits by student ID, and inserting new enrollment records. This class must be completely agnostic to the HTML generation or the business logic.
+
+# Prompt 2: Domain Layer Extraction (Business Rules)
+Extract the business rules into a new file called domain/enrollment_rules.py. Create an EnrollmentValidator class or pure function that accepts a student's current credits, the requested course credits, their prerequisite status, and any override codes. It should return the calculated status string (e.g., 'ENROLLED', 'FAILED - MISSING PREREQS'). Strip out all print() statements and database calls to keep this logic pure.
+
+# Prompt 3: Presentation Layer Extraction (HTML Report)
+Extract the HTML generation logic into a new file called presentation/html_reporter.py. Create an HtmlReporter class that accepts a list of processed student data objects. It should map these records to HTML table rows—applying the red text styling for failed statuses—and handle saving the final string to a file. It must not evaluate any business rules or read from the CSV.
+
+# Prompt 4: Main Controller
+write a controller script that imports your newly separated modules and wires them together. Run main.py. It must ingest the provided students.csv and output the exact same database entries and report.html file as the original legacy script.
